@@ -10,6 +10,9 @@
     "baseUrl": ".",
     "outDir": "dist",
 
-    "paths": {}
-  }
+    "paths": {
+      "$client/*": ["generated/prisma/*"]
+    }
+  },
+  "include": ["src/**/*"]
 }
