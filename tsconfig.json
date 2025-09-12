@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "es2022",
+    "target": "es2024",
+    "moduleResolution": "node",
+
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": false,
+
+    "baseUrl": ".",
+    "outDir": "dist",
+
+    "paths": {}
+  }
+}

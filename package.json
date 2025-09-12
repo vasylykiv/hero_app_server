@@ -1,0 +1,26 @@
+{
+  "name": "heroapi",
+  "version": "0.0.0",
+  "license": "MIT",
+  "author": "Vitaliy Vasylykiv",
+  "type": "module",
+  "main": "index.ts",
+  "scripts": {
+    "dev": "tsx --watch src/index.ts"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "dotenv": "^17.2.2",
+    "prisma": "^6.16.1",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.16.1",
+    "express": "^5.1.0",
+    "uuid": "^13.0.0"
+  },
+  "prisma": {
+    "schema": "./prisma"
+  }
+}
