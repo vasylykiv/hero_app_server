@@ -11,7 +11,10 @@
     "outDir": "dist",
 
     "paths": {
-      "$client/*": ["generated/prisma/*"]
+      "$clientDB/*": ["src/database/*"],
+      "$types/*": ["src/types/*"],
+      "$middlewares/*": ["src/middlewares/*"],
+      "$controllers/*": ["src/controllers/*"]
     }
   },
   "include": ["src/**/*"]

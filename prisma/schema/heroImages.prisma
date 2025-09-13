@@ -1,7 +1,0 @@
-model HeroImages {
-    id          String      @id
-    hero_id     String
-    image_url   String?     @unique
-
-    hero        Hero @relation(fields: [hero_id], references: [id])
-}

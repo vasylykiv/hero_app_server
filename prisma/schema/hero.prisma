@@ -1,9 +1,0 @@
-model Hero {
-    id                      String          @id
-    nickname                String          @unique
-    real_name               String?
-    origin_description      String?
-    superpowers             String?
-    catch_phrase            String?
-    images                  HeroImages[]
-}
