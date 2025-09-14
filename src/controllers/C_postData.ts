@@ -1,16 +1,20 @@
-import path from "path";
-import fs from "fs";
+import { Request, Response, NextFunction } from "express";
+import { v4 as uuidv4 } from "uuid";
 
 import { PoolClient, QueryResult } from "pg";
 import { pool as db } from "$clientDB/D_client";
-import { Request, Response, NextFunction } from "express";
-import { v4 as uuidv4 } from "uuid";
+
 import type { ClientData } from "$types/types";
 
+import U_createFolder from "$utils/U_createFolder";
+import U_createFilesURL from "$utils/U_createFilesURL";
+import U_copyFiles from "$utils/U_copyFiles";
+
 async function postData(req: Request, res: Response, next: NextFunction) {
-  const clientData = req.body as Partial<ClientData>;
+  const clientData: ClientData = req.body;
+  clientData.id = uuidv4();
+
   const resultData: { query1?: QueryResult<any>; query2?: QueryResult<any> } = {};
-  const userId = req.userId ? req.userId : uuidv4();
 
   let client: PoolClient;
   try {
@@ -23,16 +27,19 @@ async function postData(req: Request, res: Response, next: NextFunction) {
       VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING *;
     `,
-      [userId, clientData.nickname, clientData.real_name, clientData.origin_description, clientData.superpowers, clientData.catch_phrase]
+      [clientData.id, clientData.nickname, clientData.real_name, clientData.origin_description, clientData.superpowers, clientData.catch_phrase]
     );
 
     resultData.query1 = query1;
 
     if (req.files?.length !== 0) {
-      const filesPath = fs.readdirSync(req.filesFolderPath, { withFileTypes: true, recursive: true }).map((item) => {
-        return path.join(process.env.URL, "images/", req.userId, item.name);
-      });
-      const filesId = filesPath.map((item) => path.basename(item, path.extname(item)));
+      const files = req.files as Express.Multer.File[];
+      U_createFolder(clientData.id);
+      const filesName = U_copyFiles(clientData.id, files);
+      const filesNameWithoutExt = filesName.map((file) => file.split(".")[0]);
+      const filesURLs = U_createFilesURL(filesName, clientData.id);
+
+      req.files = [];
 
       const query2 = await client.query(
         `
@@ -45,7 +52,7 @@ async function postData(req: Request, res: Response, next: NextFunction) {
           unnest($2::uuid[], $3::text[]) AS unnested_data(image_id, image_link)
         RETURNING *
       `,
-        [userId, filesId, filesPath]
+        [clientData.id, filesNameWithoutExt, filesURLs]
       );
 
       resultData.query2 = query2;
