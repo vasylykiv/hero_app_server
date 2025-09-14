@@ -14,7 +14,8 @@
       "$clientDB/*": ["src/database/*"],
       "$types/*": ["src/types/*"],
       "$middlewares/*": ["src/middlewares/*"],
-      "$controllers/*": ["src/controllers/*"]
+      "$controllers/*": ["src/controllers/*"],
+      "$utils/*": ["src/utils/*"]
     }
   },
   "include": ["src/**/*"]

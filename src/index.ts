@@ -1,6 +1,7 @@
 import "dotenv/config";
 import express, { json, static as static_, Request, Response, NextFunction } from "express";
 import path from "path";
+import fs from "fs";
 
 import { pool as db } from "$clientDB/D_client";
 import apiRoutes from "./routes/R_basic";
@@ -13,19 +14,7 @@ app.use(static_(path.join(process.cwd(), "public")));
 app.use("/api", apiRoutes);
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  switch (err.code) {
-    case "ENOENT":
-      console.error(err);
-      return res.status(500).json({ error: "Something went wrong (server side)" });
-
-    case "23502":
-      console.error(err);
-      return res.status(500).json({ error: "The nickname field cannot be empty" });
-
-    default:
-      break;
-  }
-
+  console.error(err);
   res.status(500).json({ error: err.message });
 });
 
