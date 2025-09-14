@@ -3,27 +3,10 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
+import { ClientData } from "$types/types";
+import U_deleteFiles from "src/utils/U_deleteFiles";
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    if (!req.filesFolderPath) {
-      const userId = uuidv4();
-      const folderPath = path.join(process.cwd(), "public/images", userId);
-
-      fs.mkdirSync(folderPath, { recursive: true });
-      cb(null, folderPath);
-
-      req.userId = userId;
-      req.filesFolderPath = folderPath;
-    } else {
-      cb(null, req.filesFolderPath);
-    }
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = uuidv4();
-    cb(null, `${uniqueSuffix}.${file.originalname.split(".")[1]}`);
-  },
-});
+const storage = multer.memoryStorage();
 
 const upload = multer({
   storage: storage,
@@ -36,7 +19,7 @@ const upload = multer({
   },
 });
 
-function uploadMiddleware(req: Request, res: Response, next: NextFunction) {
+function M_upload(req: Request, res: Response, next: NextFunction) {
   const middleware = upload.array("images", 5);
 
   middleware(req, res, (err: any) => {
@@ -48,4 +31,4 @@ function uploadMiddleware(req: Request, res: Response, next: NextFunction) {
   });
 }
 
-export default uploadMiddleware;
+export default M_upload;

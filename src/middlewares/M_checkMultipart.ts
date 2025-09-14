@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-function checkMultipart(req: Request, res: Response, next: NextFunction) {
+function M_checkMultipart(req: Request, res: Response, next: NextFunction) {
   const contentType = req.headers["content-type"];
 
   if (!contentType || !contentType.startsWith("multipart/form-data")) {
@@ -10,4 +10,4 @@ function checkMultipart(req: Request, res: Response, next: NextFunction) {
   next();
 }
 
-export default checkMultipart;
+export default M_checkMultipart;
