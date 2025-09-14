@@ -5,6 +5,7 @@ export type ClientData = {
   origin_description: string;
   superpowers: string;
   catch_phrase: string;
+  images_to_save: string[];
   Images: ClientImages[];
 };
 
