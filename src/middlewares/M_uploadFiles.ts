@@ -1,10 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 import multer from "multer";
-import path from "path";
-import fs from "fs";
-import { v4 as uuidv4 } from "uuid";
-import { ClientData } from "$types/types";
-import U_deleteFiles from "src/utils/U_deleteFiles";
 
 const storage = multer.memoryStorage();
 

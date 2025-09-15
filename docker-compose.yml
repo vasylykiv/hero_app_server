@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  backend:
+    build: .
+    container_name: heroapp_api
+    ports:
+      - "3001:3001"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://heroapp:heroapp@db:5432/heroapp_db?schema=public
+      URL: http://localhost:3001
+      PORT: 3001
+      FILES_FOLDER: public/images
+      PUBLIC_IMAGES_FOLDER: images
+
+  db:
+    image: postgres:17
+    container_name: heroapp_database
+    restart: always
+    environment:
+      POSTGRES_USER: heroapp
+      POSTGRES_PASSWORD: heroapp
+      POSTGRES_DB: heroapp_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-db:/docker-entrypoint-initdb.d
+
+volumes:
+  postgres_data:

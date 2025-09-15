@@ -1,10 +1,9 @@
 import "dotenv/config";
 import express, { json, static as static_, Request, Response, NextFunction } from "express";
 import path from "path";
-import fs from "fs";
 
-import { pool as db } from "$clientDB/D_client";
-import apiRoutes from "./routes/R_basic";
+import { pool as db } from "$clientDB/D_client.js";
+import apiRoutes from "./routes/R_basic.js";
 
 const app = express();
 const port = process.env.PORT || 5001;

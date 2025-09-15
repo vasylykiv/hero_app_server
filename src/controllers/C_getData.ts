@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { PoolClient, QueryResult } from "pg";
-import { pool as db } from "$clientDB/D_client";
+import { pool as db } from "$clientDB/D_client.js";
 
 async function C_getData(req: Request, res: Response, next: NextFunction) {
   const page = parseInt(req.query.page as string) || 1;

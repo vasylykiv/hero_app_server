@@ -1,0 +1,10 @@
+node_modules/
+dist/
+certs/
+
+.env
+.vscode/
+.idea/
+
+.git
+.gitigore

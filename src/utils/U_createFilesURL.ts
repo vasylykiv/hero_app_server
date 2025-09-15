@@ -1,11 +1,6 @@
-import { v4 as uuidv4 } from "uuid";
-
 import path from "path";
-import fs from "fs";
 
-import type { ClientFileType } from "$types/types.ts";
-
-function U_createFilesURL(files: string[], folderName: string): ClientFileType[] {
+function U_createFilesURL(files: string[], folderName: string): string[] {
   const filesURLs = [];
 
   try {

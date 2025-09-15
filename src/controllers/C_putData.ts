@@ -1,11 +1,11 @@
 import { PoolClient, QueryResult } from "pg";
-import { pool as db } from "$clientDB/D_client";
+import { pool as db } from "$clientDB/D_client.js";
 import { Request, Response, NextFunction } from "express";
 import type { ClientData } from "$types/types";
 
-import U_createFilesURL from "$utils/U_createFilesURL";
-import U_copyFiles from "$utils/U_copyFiles";
-import U_deleteFiles from "$utils/U_deleteFiles";
+import U_createFilesURL from "$utils/U_createFilesURL.js";
+import U_copyFiles from "$utils/U_copyFiles.js";
+import U_deleteFiles from "$utils/U_deleteFiles.js";
 
 async function C_patchData(req: Request, res: Response, next: NextFunction) {
   const clientData: ClientData = req.body;

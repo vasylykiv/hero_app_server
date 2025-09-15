@@ -1,12 +1,12 @@
-import { Router, Request, Response, NextFunction } from "express";
+import { Router } from "express";
 
-import C_getData from "$controllers/C_getData";
-import C_postData from "$controllers/C_postData";
-import C_putData from "$controllers/C_putData";
-import C_deleteData from "$controllers/C_deleteData";
+import C_getData from "$controllers/C_getData.js";
+import C_postData from "$controllers/C_postData.js";
+import C_putData from "$controllers/C_putData.js";
+import C_deleteData from "$controllers/C_deleteData.js";
 
-import M_upload from "$middlewares/M_uploadFiles";
-import M_checkMultipart from "$middlewares/M_checkMultipart";
+import M_upload from "$middlewares/M_uploadFiles.js";
+import M_checkMultipart from "$middlewares/M_checkMultipart.js";
 
 const router = Router();
 

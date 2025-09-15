@@ -1,7 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
 
-import type { ClientFileType } from "$types/types";
-
 import path from "path";
 import fs from "fs";
 
