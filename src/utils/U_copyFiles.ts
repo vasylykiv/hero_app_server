@@ -11,7 +11,7 @@ function U_copyFiles(parentFolderPath: string, files: Express.Multer.File[]): st
       const filename = uuidv4() + path.extname(file.originalname);
       const fileDestination = path.join(parentFolderPath, filename);
 
-      if (!fs.existsSync(parentFolderPath)) fs.mkdirSync(parentFolderPath);
+      if (!fs.existsSync(parentFolderPath)) fs.mkdirSync(parentFolderPath, { recursive: true });
 
       fs.writeFileSync(fileDestination, file.buffer, {});
       filesArr.push(filename);

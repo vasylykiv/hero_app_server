@@ -13,7 +13,6 @@ async function C_putData(req: Request, res: Response, next: NextFunction) {
   const clientData: ClientData = req.body;
   const id = req.params?.id;
   const action = req.query?.action;
-  const files = req.files as Express.Multer.File[];
 
   if (!id) return res.status(200).json({ message: "The id parameter in link cannot be empty" });
 
@@ -38,6 +37,7 @@ async function C_putData(req: Request, res: Response, next: NextFunction) {
     );
 
     const folderPath = path.join(process.cwd(), "public/images", id);
+    const files = req.files as Express.Multer.File[];
 
     if (action === "change" && files?.length > 0) {
       U_deleteFiles(folderPath);
