@@ -13,5 +13,7 @@
 
 **Запуск кліента локально**
 Репозиторій з клієнтом: [hero_app_client](https://github.com/vasylykiv/hero_app_client)
+
 `npm run dev` 
+
 В браузері відкриється  клієнт який уже буде зєднаний з бекендом, пробний запуск робив на *Visual Studio Code*
