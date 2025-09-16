@@ -1,8 +1,7 @@
 import path from "path";
 import fs from "fs";
 
-function U_deleteFiles(id: string) {
-  const folderPath = path.join(process.cwd(), "public/images", id);
+function U_deleteFiles(folderPath: string) {
   try {
     if (fs.existsSync(folderPath)) {
       const storedFiles = fs.readdirSync(folderPath);
