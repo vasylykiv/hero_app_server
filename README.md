@@ -17,3 +17,6 @@
 `npm run dev` 
 
 В браузері відкриється  клієнт який уже буде зєднаний з бекендом, пробний запуск робив на *Visual Studio Code*
+
+### ✅ Updatet 16.09.25 20:00 
+- (Fixed bug with writing files)
