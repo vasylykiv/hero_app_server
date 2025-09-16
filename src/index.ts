@@ -10,8 +10,12 @@ const app = express();
 const port = process.env.PORT || 5001;
 
 app.use(json());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
 app.use(static_(path.join(process.cwd(), "public")));
-app.use(cors());
 app.use("/api", apiRoutes);
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {

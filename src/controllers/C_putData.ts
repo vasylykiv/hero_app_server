@@ -1,13 +1,15 @@
 import { PoolClient, QueryResult } from "pg";
 import { pool as db } from "$clientDB/D_client.js";
 import { Request, Response, NextFunction } from "express";
-import type { ClientData } from "$types/types";
 
 import U_createFilesURL from "$utils/U_createFilesURL.js";
 import U_copyFiles from "$utils/U_copyFiles.js";
 import U_deleteFiles from "$utils/U_deleteFiles.js";
 
-async function C_patchData(req: Request, res: Response, next: NextFunction) {
+import type { ClientData } from "$types/types";
+
+async function C_putData(req: Request, res: Response, next: NextFunction) {
+  console.log("putted");
   const clientData: ClientData = req.body;
   const id = req.params?.id;
   const resultData: { query1?: QueryResult<any>; query2?: QueryResult<any> } = {};
@@ -23,11 +25,11 @@ async function C_patchData(req: Request, res: Response, next: NextFunction) {
       `
       UPDATE "hero" 
       SET
-          nickname = COALESCE(NULLIF($2, ''), nickname), 
-          real_name = COALESCE(NULLIF($3, ''), real_name), 
-          origin_description = COALESCE(NULLIF($4, ''), origin_description), 
-          superpowers = COALESCE(NULLIF($5, ''), superpowers), 
-          catch_phrase = COALESCE(NULLIF($6, ''), catch_phrase)
+          nickname = $2, 
+          real_name = $3, 
+          origin_description = $4, 
+          superpowers = $5, 
+          catch_phrase = $6
       WHERE id = $1
       RETURNING *;
     `,
@@ -82,4 +84,4 @@ async function C_patchData(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-export default C_patchData;
+export default C_putData;

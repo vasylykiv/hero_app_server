@@ -1,14 +1,15 @@
 import { Request, Response, NextFunction } from "express";
+
 import { v4 as uuidv4 } from "uuid";
 
 import { PoolClient, QueryResult } from "pg";
 import { pool as db } from "$clientDB/D_client.js";
 
-import type { ClientData } from "$types/types";
-
 import U_createFolder from "$utils/U_createFolder.js";
 import U_createFilesURL from "$utils/U_createFilesURL.js";
 import U_copyFiles from "$utils/U_copyFiles.js";
+
+import type { ClientData } from "$types/types";
 
 async function postData(req: Request, res: Response, next: NextFunction) {
   const clientData: ClientData = req.body;
@@ -31,7 +32,6 @@ async function postData(req: Request, res: Response, next: NextFunction) {
     );
 
     resultData.query1 = query1;
-    console.log(req.files?.length);
 
     if (req.files?.length !== 0) {
       const files = req.files as Express.Multer.File[];
