@@ -3,14 +3,17 @@ import fs from "fs";
 
 import { v4 as uuidv4 } from "uuid";
 
-function U_copyFiles(parentFolderName: string, files: Express.Multer.File[]): string[] {
+function U_copyFiles(parentFolderPath: string, files: Express.Multer.File[]): string[] {
   const filesArr = [];
+
   try {
     files.forEach((file) => {
       const filename = uuidv4() + path.extname(file.originalname);
-      const fileDestination = path.join(process.cwd(), process.env.FILES_FOLDER!, parentFolderName, filename);
+      const fileDestination = path.join(parentFolderPath, filename);
 
-      fs.writeFileSync(fileDestination, file.buffer);
+      if (!fs.existsSync(parentFolderPath)) fs.mkdirSync(parentFolderPath);
+
+      fs.writeFileSync(fileDestination, file.buffer, {});
       filesArr.push(filename);
     });
   } catch (error) {
