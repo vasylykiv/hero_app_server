@@ -1,6 +1,7 @@
 import { PoolClient, QueryResult } from "pg";
 import { pool as db } from "$clientDB/D_client.js";
 import { Request, Response, NextFunction } from "express";
+import path from "path";
 
 import U_createFilesURL from "$utils/U_createFilesURL.js";
 import U_copyFiles from "$utils/U_copyFiles.js";
@@ -9,10 +10,10 @@ import U_deleteFiles from "$utils/U_deleteFiles.js";
 import type { ClientData } from "$types/types";
 
 async function C_putData(req: Request, res: Response, next: NextFunction) {
-  console.log("putted");
   const clientData: ClientData = req.body;
   const id = req.params?.id;
-  const resultData: { query1?: QueryResult<any>; query2?: QueryResult<any> } = {};
+  const action = req.query?.action;
+  const files = req.files as Express.Multer.File[];
 
   if (!id) return res.status(200).json({ message: "The id parameter in link cannot be empty" });
 
@@ -21,7 +22,7 @@ async function C_putData(req: Request, res: Response, next: NextFunction) {
     client = await db.connect();
 
     await client.query("BEGIN");
-    const query1 = await client.query(
+    await client.query(
       `
       UPDATE "hero" 
       SET
@@ -36,17 +37,10 @@ async function C_putData(req: Request, res: Response, next: NextFunction) {
       [id, clientData.nickname, clientData.real_name, clientData.origin_description, clientData.superpowers, clientData.catch_phrase]
     );
 
-    resultData.query1 = query1;
+    const folderPath = path.join(process.cwd(), "public/images", id);
 
-    if (req.files?.length !== 0) {
-      const files = req.files as Express.Multer.File[];
-
-      U_deleteFiles(id);
-      const filesName = U_copyFiles(id, files);
-      const filesNameWithoutExt = filesName.map((file) => file.split(".")[0]);
-      const filesURLs = U_createFilesURL(filesName, id);
-
-      req.files = [];
+    if (action === "change" && files?.length > 0) {
+      U_deleteFiles(folderPath);
 
       await client.query(
         `
@@ -56,7 +50,15 @@ async function C_putData(req: Request, res: Response, next: NextFunction) {
         [id]
       );
 
-      const query2 = await client.query(
+      const filesName = U_copyFiles(folderPath, files);
+      const filesNameWithoutExt = filesName.map((file) => file.split(".")[0]);
+      const filesURLs = U_createFilesURL(filesName, id);
+
+      console.log(filesURLs);
+
+      req.files = [];
+
+      await client.query(
         `
         INSERT INTO "hero_images" (id, hero_id, image_url)
         SELECT
@@ -69,13 +71,21 @@ async function C_putData(req: Request, res: Response, next: NextFunction) {
       `,
         [id, filesNameWithoutExt, filesURLs]
       );
+    } else if (action === "delete" && (!files || files?.length === 0)) {
+      U_deleteFiles(folderPath);
 
-      resultData.query2 = query2;
+      await client.query(
+        `
+        DELETE FROM "hero_images" *
+        WHERE hero_id = $1
+      `,
+        [id]
+      );
     }
 
     await client.query("COMMIT");
 
-    res.status(200).json({ message: "Success", data: resultData.query1.rows[0], images: resultData.query2?.rows });
+    res.status(200).json({ message: "Success change hero data" });
   } catch (error) {
     await client.query("ROLLBACK");
     return next(error);
