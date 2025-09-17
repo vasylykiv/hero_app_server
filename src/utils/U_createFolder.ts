@@ -1,8 +1,7 @@
 import path from "path";
 import fs from "fs";
 
-function U_createFolder(id: string) {
-  const folderPath = path.join(process.cwd(), "public/images", id);
+function U_createFolder(folderPath: string) {
   if (!fs.existsSync(folderPath)) {
     fs.mkdirSync(folderPath);
   }

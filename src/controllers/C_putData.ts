@@ -2,6 +2,7 @@ import { PoolClient, QueryResult } from "pg";
 import { pool as db } from "$clientDB/D_client.js";
 import { Request, Response, NextFunction } from "express";
 import path from "path";
+import fs from "fs";
 
 import U_createFilesURL from "$utils/U_createFilesURL.js";
 import U_copyFiles from "$utils/U_copyFiles.js";
