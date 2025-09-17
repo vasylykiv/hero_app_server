@@ -6,7 +6,7 @@ function U_createFilesURL(files: string[], folderName: string): string[] {
       filesURLs.push(`${process.env.URL}/${process.env.PUBLIC_IMAGES_FOLDER}/${folderName}/${file}`);
     });
   } catch (error) {
-    throw new Error(error);
+    console.error(error);
   }
 
   return filesURLs;

@@ -18,7 +18,7 @@ async function C_deleteData(req: Request, res: Response, next: NextFunction) {
 
     const count = await client.query(
       `
-        DELETE FROM "hero" * 
+        DELETE FROM "hero"
         WHERE id = $1
         
     `,

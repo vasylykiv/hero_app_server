@@ -55,8 +55,6 @@ async function C_putData(req: Request, res: Response, next: NextFunction) {
       const filesNameWithoutExt = filesName.map((file) => file.split(".")[0]);
       const filesURLs = U_createFilesURL(filesName, id);
 
-      console.log(filesURLs);
-
       req.files = [];
 
       await client.query(

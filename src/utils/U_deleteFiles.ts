@@ -11,7 +11,7 @@ function U_deleteFiles(folderPath: string) {
       });
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw new Error(error);
   }
 }

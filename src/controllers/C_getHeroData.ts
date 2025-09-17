@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 
+import U_checkImagesExists from "$utils/U_checkImagesExists.js";
+
 import { PoolClient, QueryResult } from "pg";
 import { pool as db } from "$clientDB/D_client.js";
 
@@ -11,8 +13,8 @@ async function C_getHeroData(req: Request, res: Response, next: NextFunction) {
   let client: PoolClient;
   try {
     client = await db.connect();
-    const result = await client.query(
-      `
+    const queryData = {
+      queryText: `
         SELECT 
           hero.*,
           COALESCE(
@@ -25,10 +27,15 @@ async function C_getHeroData(req: Request, res: Response, next: NextFunction) {
         GROUP BY hero.id 
         ORDER BY hero.id ASC 
     `,
-      [heroId]
-    );
+      queryDependencies: [heroId],
+    };
+    const result = await client.query(queryData.queryText, queryData.queryDependencies);
 
-    res.status(200).json({ message: "Success", data: result.rows[0] });
+    // this for filter hero images, if hero images folder dont exist or empty but hero has record about images, we clean images field for hero
+    await U_checkImagesExists(result, client, "single");
+    const cleanedResult = await client.query(queryData.queryText, queryData.queryDependencies);
+
+    res.status(200).json({ message: "Success", data: cleanedResult.rows[0] });
   } catch (error) {
     console.error(error);
     next(error);

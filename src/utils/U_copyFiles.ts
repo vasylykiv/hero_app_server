@@ -17,6 +17,7 @@ function U_copyFiles(parentFolderPath: string, files: Express.Multer.File[]): st
       filesArr.push(filename);
     });
   } catch (error) {
+    console.error(error);
     throw new Error(error);
   }
 

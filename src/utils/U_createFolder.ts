@@ -7,7 +7,8 @@ function U_createFolder(folderPath: string) {
       fs.mkdirSync(folderPath, { recursive: true });
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    throw new Error(error);
   }
 }
 
