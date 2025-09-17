@@ -18,9 +18,8 @@ async function C_getHeroData(req: Request, res: Response, next: NextFunction) {
         SELECT 
           hero.*,
           COALESCE(
-            json_agg( 
-              hero_images.image_url 
-            ), '[]') as images_url
+            json_agg(hero_images.image_url ) FILTER (WHERE hero_images.image_url IS NOT NULL), 
+            '[]'::json) as images_url
         FROM hero 
         LEFT JOIN hero_images ON hero.id = hero_images.hero_id 
         WHERE hero.id = $1
@@ -29,6 +28,7 @@ async function C_getHeroData(req: Request, res: Response, next: NextFunction) {
     `,
       queryDependencies: [heroId],
     };
+
     const result = await client.query(queryData.queryText, queryData.queryDependencies);
 
     // this for filter hero images, if hero images folder dont exist or empty but hero has record about images, we clean images field for hero

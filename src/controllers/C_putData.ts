@@ -45,7 +45,7 @@ async function C_putData(req: Request, res: Response, next: NextFunction) {
 
       await client.query(
         `
-        DELETE FROM "hero_images" *
+        DELETE FROM "hero_images"
         WHERE hero_id = $1
       `,
         [id]
@@ -75,7 +75,7 @@ async function C_putData(req: Request, res: Response, next: NextFunction) {
 
       await client.query(
         `
-        DELETE FROM "hero_images" *
+        DELETE FROM "hero_images"
         WHERE hero_id = $1
       `,
         [id]
