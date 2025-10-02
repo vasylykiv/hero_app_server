@@ -6,7 +6,12 @@ This is a backand part of hero app, build with ***express.js*** + ***typescript*
 
 All images store on backend in special folder.
 
-## 🚀 Tech Stack
+---
+<h3>Frontend part: https://github.com/vasylykiv/hero_app_client</h3>
+
+---
+
+🚀 Tech Stack
 
 This project is built using the following technologies and libraries:
 
