@@ -71,4 +71,4 @@ ___
 **DATABASE_URL**=postgresql://[<u>username</u>]:[<u>password</u>]@localhost:5432/[<u>database name</u>]?schema=public
 
 ---
-After this, open [http://localhost:3000](https://www.google.com/search?q=http://localhost:3000) in your browser to see the application.
+After this, open [http://localhost:3001](https://www.google.com/search?q=http://localhost:3000) in your browser to see the application.
