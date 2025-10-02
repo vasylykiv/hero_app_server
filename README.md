@@ -49,8 +49,8 @@ npm install
 In this case, you need to generate the database yourself and connect to it.
 
 1.  Create .env file in your directory on top level.
-2.  Create new user in your database  "**heroapp**" with password "**heroapp**".
-3.  Name your database "**heroapp_db**" and import sql file from **init-db**. (*only if you use pgadmin*)
+2.  (*only if you use pgadmin*) Create new user for database  "**heroapp**" with password "**heroapp**".
+3.  (*only if you use pgadmin*) Name your database "**heroapp_db**" and import sql file from **init-db**. 
 4. Fill in the required fields or just copy in your .env file:
  ```bash  
  DATABASE_URL=postgresql://heroapp:heroapp@localhost:5432/heroapp_db?schema=public
