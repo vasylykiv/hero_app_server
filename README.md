@@ -1,4 +1,4 @@
-# Hero Rest API - Back-end [*Express*, *Typescript*, *PostgreSQL*]
+# Hero Rest API - Back-end
 
 This is a backand part of hero app, build with ***express.js*** + ***typescript*** + ***postgresql*** and related node.js libraries. The application contain all basic operation with data, namely: create new hero with user information and images, edit hero information and save changes, get all heroes data for client frontend and delete heroes al all. This app has 2  advantages that set it apart from others: 
 - **image system**, 
